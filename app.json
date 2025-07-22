@@ -37,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "SERVER_URL": "wss://ws-server-pk57.onrender.com",
+      "eas": {
+        "projectId": "56c36838-460f-4f8b-a21e-17ee72836ab4"
+      }
+    },
+    "owner": "nolh1"
   }
 }
