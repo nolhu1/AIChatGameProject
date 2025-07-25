@@ -22,8 +22,8 @@ export default function HomeScreen() {
     { id: string; users: number; maxHumans: number; isPrivate: boolean }[]
   >([]);
 
-  const [maxHumans, setMaxHumans] = useState("4");
-  const [maxBots, setMaxBots] = useState("1");
+  const [maxHumans, setMaxHumans] = useState("");
+  const [maxBots, setMaxBots] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [usernameInput, setUsernameInput] = useState("");
 
@@ -92,7 +92,7 @@ export default function HomeScreen() {
               <TextInput
                 value={maxBots}
                 onChangeText={setMaxBots}
-                placeholder="Max Bots"
+                placeholder="Max Bots (<=3)"
                 keyboardType="numeric"
                 style={styles.input}
               />
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 10,
     marginBottom: 10,
+    color: "grey",
   },
   switchContainer: {
     flexDirection: "row",

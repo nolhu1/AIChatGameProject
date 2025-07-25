@@ -1,51 +1,65 @@
-# Welcome to your Expo app 👋
+# AI Chat Game Prototype
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a lightweight mobile prototype of a real-time, mixed human-AI chat game, built as a take-home assessment. It demonstrates dynamic lobby creation, live chat using WebSockets, and AI chatbot interaction using the OpenAI API. The prototype is built in React Native and packaged as an Android APK.
 
-## Get started
+## 🧩 What It Does
 
-1. Install dependencies
+- Users can create or join public/private lobbies.
+- Lobbies support unlimited users and configurable AI participants.
+- Real-time chat is powered via WebSockets.
+- ChatGPT bots (via OpenAI API) respond to messages contextually within each lobby.
+- Every N messages, a simple game event (e.g., a trivia prompt) is injected to simulate future extensibility into games.
 
-   ```bash
-   npm install
-   ```
+## ⚙️ Architecture (see AI Chat Architecture.png)
 
-2. Start the app
+1. **Client (Expo React Native)**  
+   Handles UI, navigation, and socket communication. Manages local state, message display, and triggering AI/game events.
 
-   ```bash
-   npx expo start
-   ```
+2. **Server (Node.js + Socket.IO)**  
+   - Manages lobby state and message broadcasting.
+   - Handles client connections and disconnections.
+   - Relays chat to OpenAI and injects game events periodically.
+   - server deployed on Render.
 
-In the output, you'll find options to open the app in a
+3. **AI Integration**  
+   - OpenAI's ChatGPT API is used for AI responses.
+   - Bots are instantiated per lobby with their own names/avatars.
+   - Response streaming is supported (if enabled by token-level streaming).
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🛠️ Tech Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| Layer       | Technology                  |
+|------------|-----------------------------|
+| Mobile UI   | React Native (Expo)         |
+| Realtime    | Socket.IO w/ Render(Client + Server) |
+| Backend     | Node.js                     |
+| AI Service  | OpenAI Chat Completion API  |
 
-## Get a fresh project
+## 💬 Prompt Strategy
 
-When you're ready, run:
+- Each AI message uses the full recent chat context (with limit).
+- Prompts begin with an instruction defining the bot’s personality and role.
+- System message: `"You are a funny and witty game participant named QuizBot. Always respond quickly and playfully."`
 
+**Rate limiting:**  
+Basic in-memory throttle (per lobby) to limit one bot message per 3 seconds. Future work should include per-IP rate limits and context window management.
+
+## 🚀 Setup & Build Instructions
+
+### 🔧 Local Dev
+
+**1. Clone Repository**
 ```bash
-npm run reset-project
-```
+git clone https://github.com/your-username/ai-chat-game.git
+cd ai-chat-game
+cd app
+npm install
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**2. Start development Server**
+npx expo start
+cd app
+eas build -p android --profile preview
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# AIChatGameProject
+**3. Build APK**
+cd app
+eas build -p android --profile preview

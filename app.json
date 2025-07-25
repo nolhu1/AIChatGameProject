@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.nolh1.AIChatGameProject"
     },
     "web": {
       "bundler": "metro",
@@ -40,6 +41,8 @@
     },
     "extra": {
       "router": {},
+
+      //"SERVER_URL": "ws://192.168.2.3:3000",
       "SERVER_URL": "wss://ws-server-pk57.onrender.com",
       "eas": {
         "projectId": "56c36838-460f-4f8b-a21e-17ee72836ab4"
